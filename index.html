@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Gorakee!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="icon" type="image/png" href="images/falling-star.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Permanent+Marker&family=Creepster&family=Dancing+Script:wght@600,700&family=La+Belle+Aurore&family=Courier+Prime&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- FONTS --- */
+        .font-pirate-header { font-family: 'Cinzel Decorative', cursive; }
+        .font-pirate-marker { font-family: 'Permanent Marker', cursive; }
+        .font-scary { font-family: 'Creepster', display; }
+        .font-aesthetic { font-family: 'La Belle Aurore', cursive; }
+        .font-typewriter { font-family: 'Courier Prime', monospace; }
+
+        /* --- GLOBAL STYLES --- */
+        .neon-text-orange { text-shadow: 0 0 5px #ff6600, 0 0 10px #ff6600, 0 0 20px #ff0000; }
+        .neon-box { box-shadow: 0 0 10px #ff4500, inset 0 0 20px #ff4500; border: 2px solid #ff4500; }
+        
+        /* SPARKS */
+        .sparks-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
+        .spark { position: absolute; bottom: -10px; width: 4px; height: 4px; background-color: #ffaa00; border-radius: 50%; box-shadow: 0 0 10px #ff0000; opacity: 0; animation: rise 5s infinite ease-in; }
+        @keyframes rise { 0% { bottom: -10px; opacity: 1; transform: translateX(0); } 100% { bottom: 100%; opacity: 0; transform: translateX(var(--tx)); } }
+
+        /* CHAOS ICONS (Section 2) */
+        @keyframes floatChaotic { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(20px, -30px) rotate(10deg); } 50% { transform: translate(-10px, 20px) rotate(-5deg); } 75% { transform: translate(-20px, -10px) rotate(5deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+        .floating-icon { position: absolute; animation: floatChaotic 6s infinite ease-in-out; pointer-events: none; }
+
+        /* --- THE GRAND LINE (MAP PATH ANIMATION) --- */
+        .grand-line-container {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 4px; height: 100%; z-index: 5; pointer-events: none;
+            overflow: hidden;
+        }
+        .grand-line-path {
+            width: 100%; height: 100%;
+            background-repeat: repeat-y;
+            background-size: 100% 40px; /* Dash size */
+            animation: drawLine 3s ease-out forwards;
+            transform-origin: top;
+        }
+        @keyframes drawLine { from { height: 0%; } to { height: 100%; } }
+
+        /* Style for Section 2 (Ink Style) */
+        .path-ink {
+            background-image: linear-gradient(to bottom, #3e2723 60%, transparent 40%);
+            opacity: 0.6;
+        }
+        /* Style for Section 3 (Stardust Style) */
+        .path-stardust {
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.8) 50%, transparent 50%);
+            box-shadow: 0 0 10px white;
+            opacity: 0.4;
+        }
+
+        /* --- SECTION 3: SPACE STYLES --- */
+        .galaxy-section {
+            background-color: #0f0c29;
+            background-image: linear-gradient(to bottom, rgba(15, 12, 41, 0.6), rgba(48, 43, 99, 0.4)), url('https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=2066&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            overflow: hidden; position: relative;
+        }
+
+        /* Space Debris (Floating Icons) */
+        .space-debris {
+            position: absolute; pointer-events: none; 
+            opacity: 0.7; mix-blend-mode: screen;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
+            animation: slowFloat 40s infinite linear alternate;
+        }
+        @keyframes slowFloat { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-30px) rotate(15deg); } }
+
+        /* Moon Styles */
+        .moon-glow-container {
+            position: relative; z-index: 20; cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .moon-glow-container:hover { transform: scale(1.05); }
+        .moon-img {
+            width: 250px; height: 250px;
+            filter: drop-shadow(0 0 60px rgba(100, 200, 255, 0.4));
+            animation: moonFloat 6s infinite ease-in-out;
+        }
+        @media (min-width: 768px) { .moon-img { width: 400px; height: 400px; } }
+        @keyframes moonFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        /* Note Styles */
+        .vintage-note {
+            background-color: #f3e5ab;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            border-radius: 4px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 60px rgba(160, 82, 45, 0.2);
+            position: relative; transform: rotate(-1deg);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .wax-seal {
+            position: absolute; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: #8b0000; border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 2px 5px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.4); font-family: serif; font-weight: bold; font-size: 24px;
+            border: 4px double rgba(0,0,0,0.2);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="no-scrollbar bg-black text-white overflow-x-hidden">
+
+    <section id="quiz-section" class="h-screen flex flex-col items-center justify-center relative bg-black overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-red-900/40 to-black z-0"></div>
+        <div class="sparks-container" id="sparks-bg"></div>
+        <img src="images/luffy-hat.png" class="absolute top-10 right-10 w-32 opacity-20 rotate-12 animate-pulse">
+        <img src="images/middle-finger.png" class="absolute bottom-10 left-10 w-24 opacity-20 -rotate-12 grayscale">
+        <div class="z-10 relative max-w-lg w-full p-1 mx-4">
+            <div class="bg-black/80 backdrop-blur-md neon-box rounded-xl p-8 text-center border-t-4 border-orange-600">
+                <h1 class="text-4xl md:text-5xl font-scary text-orange-500 neon-text-orange mb-2 tracking-widest">WARNING</h1>
+                <p class="font-pirate-marker text-red-500 text-lg mb-8 uppercase tracking-widest border-b border-red-900 pb-2">Identify Yourself</p>
+                <div id="question-container">
+                    <p id="question-text" class="text-2xl font-bold font-pirate-marker text-white mb-10 leading-relaxed min-h-[100px] flex items-center justify-center">Loading...</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-6">
+                        <button onclick="handleAnswer('yes')" class="group relative px-8 py-3 font-bold text-black transition-all duration-200 bg-orange-500 font-pirate-marker rounded-lg hover:bg-orange-400 hover:shadow-[0_0_20px_#ff6600]">YES (Oww)</button>
+                        <button onclick="handleAnswer('no')" class="group px-8 py-3 font-bold text-white transition-all duration-200 border-2 border-red-600 font-pirate-marker rounded-lg hover:bg-red-600 hover:shadow-[0_0_20px_#ff0000]">NO (Naa)</button>
+                    </div>
+                </div>
+                <p id="error-msg" class="hidden mt-6 text-red-500 font-scary text-2xl animate-bounce"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="celebration-section" class="hidden min-h-screen relative overflow-hidden bg-gradient-to-b from-yellow-500 to-orange-700">
+        
+        <div class="grand-line-container">
+            <div class="grand-line-path path-ink"></div>
+        </div>
+
+        <div id="chaos-container" class="absolute inset-0 z-0"></div>
+        <div class="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
+            <div class="bg-white/20 backdrop-blur-md p-8 rounded-2xl border-4 border-black shadow-2xl transform rotate-1">
+                <h1 class="text-6xl md:text-8xl font-pirate-marker text-black drop-shadow-md mb-4 leading-none">
+                    Happy Birthday <br> <span class="text-red-700">Gorakeeeeeeee!!!</span>
+                </h1>
+            </div>
+            <div class="mt-12 animate-bounce text-black bg-white/30 p-2 rounded-lg backdrop-blur-sm">
+                <p class="font-pirate-marker text-xl">Follow the Map Line ↓</p>
+                <svg class="w-10 h-10 mx-auto mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </div>
+        </div>
+    </section>
+
+    <section id="galaxy-section" class="hidden min-h-screen galaxy-section relative flex items-center justify-center">
+        
+        <div class="grand-line-container" style="height: 50%; top: 0;">
+            <div class="grand-line-path path-stardust" style="animation-delay: 1s;"></div>
+        </div>
+
+        <div id="starfield"></div>
+
+        <img src="images/astronaut.png" class="space-debris" style="width: 50px; top: 15%; left: 10%;">
+        <img src="images/black-hole.png" class="space-debris" style="width: 80px; bottom: 20%; right: 10%;">
+        <img src="images/asteroid.png" class="space-debris" style="width: 40px; top: 20%; right: 25%;">
+        
+        <img src="images/luffy-hat.png" class="space-debris" style="width: 40px; bottom: 40%; left: 5%; opacity: 0.5; transform: rotate(45deg);">
+        <img src="images/luffy-hat.png" class="space-debris" style="width: 30px; top: 10%; right: 40%; opacity: 0.4; transform: rotate(-20deg);">
+        
+        <img src="images/middle-finger.png" class="space-debris" style="width: 30px; top: 5%; left: 50%; opacity: 0.4;">
+        <img src="images/middle-finger.png" class="space-debris" style="width: 35px; bottom: 30%; right: 30%; opacity: 0.3; transform: rotate(90deg);">
+        
+        <img src="images/shrek.png" class="space-debris" style="width: 30px; bottom: 10%; left: 20%; opacity: 0.4;">
+        <img src="images/shrek.png" class="space-debris" style="width: 40px; top: 30%; left: 15%; opacity: 0.3; transform: rotate(180deg);">
+        
+        <img src="images/donkey.png" class="space-debris" style="width: 30px; top: 30%; right: 5%; opacity: 0.4;">
+        <img src="images/donkey.png" class="space-debris" style="width: 35px; bottom: 50%; right: 15%; opacity: 0.3; transform: rotate(-45deg);">
+        
+        <img src="images/cloud.png" class="space-debris" style="width: 200px; bottom: 0%; right: 40%; opacity: 0.2; filter: blur(10px);">
+        <img src="images/cloud.png" class="space-debris" style="width: 250px; top: 10%; left: -50px; opacity: 0.2; filter: blur(15px);">
+
+        <img src="images/comet.png" class="space-debris" style="width: 60px; top: -10%; right: -10%; animation: shootingStar 8s infinite linear;">
+        <style> @keyframes shootingStar { 0% { transform: translate(0,0) scale(0.5); opacity: 1; } 100% { transform: translate(-800px, 800px) scale(1); opacity: 0; } } </style>
+
+
+        <div class="moon-glow-container group" onclick="openSpaceNote()">
+            <div class="absolute inset-0 bg-blue-400 blur-[80px] opacity-20 group-hover:opacity-40 transition duration-700 rounded-full"></div>
+            <img src="images/full-moon.png" class="moon-img">
+            <div class="absolute -bottom-12 w-full text-center">
+                <p class="text-blue-100 font-typewriter text-xs tracking-[0.4em] opacity-60 animate-pulse">CLICK THE MOON</p>
+            </div>
+        </div>
+
+
+        <div id="space-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 opacity-0 pointer-events-none transition-all duration-700 backdrop-blur-md p-4">
+            <div class="vintage-note p-10 md:p-14 max-w-lg w-full transform scale-95 translate-y-4 transition-all duration-700 shadow-2xl" id="space-content">
+                <button onclick="closeSpaceNote()" class="absolute top-4 right-6 text-2xl text-[#5d4037] hover:text-black transition-colors z-30 font-typewriter font-bold">✕</button>
+                <div class="relative z-10">
+                    <p class="font-typewriter text-[10px] text-[#8b4513] tracking-widest mb-6 border-b border-[#d2b48c] pb-2 inline-block">uu lil donkey</p>
+                    <h2 class="text-3xl md:text-4xl font-aesthetic font-bold text-[#3e2723] mb-6">Dear Twin,</h2>
+                    <div class="font-aesthetic text-xl md:text-2xl leading-relaxed text-[#2a1a12] space-y-4">
+                        <p>Subaaamaa subaaaaaa cupirii Birthday ekak weewaa naakiiiiiii moodaharak buruuuuuu aiyeee 🫶🏻. Gonwada aduwenaaaaa mole gdk godakkkkkkkk paadenaaaaa sumpiriiiiiiiii happeninggggg , work stressssssss ek aduuuuu wena oygeeeeee wishes okkomaa truueeeeeee wena cumpiriyaaaaaaaak weewaa maaaaa aaadaraniiiiiiyaa sahoodarayaaneniiiii ♥️🍻 !!!!</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-[#d2b48c]/50">
+                        <p class="text-left mt-4 font-aesthetic text-xl text-[#3e2723]">- Sameeee</p>
+                    </div>
+                </div>
+                <div class="wax-seal">S</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. STARS JS ---
+        const galaxySec = document.getElementById('starfield');
+        for(let i=0; i<80; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.background = 'white';
+            star.style.borderRadius = '50%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            const size = Math.random() * 2 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.opacity = Math.random() * 0.7 + 0.3;
+            star.style.animation = `twinkle ${Math.random()*3+2}s infinite alternate`;
+            galaxySec.appendChild(star);
+        }
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }`;
+        document.head.appendChild(style);
+
+        // --- 2. SPARKS (Section 1) ---
+        const sparkContainer = document.getElementById('sparks-bg');
+        for(let i=0; i<50; i++) {
+            const spark = document.createElement('div');
+            spark.classList.add('spark');
+            spark.style.left = Math.random() * 100 + '%';
+            spark.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+            spark.style.animationDelay = Math.random() * 5 + 's';
+            spark.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            sparkContainer.appendChild(spark);
+        }
+
+        // --- 3. QUIZ LOGIC ---
+        const questions = [
+            "1. Chamitha mooooda mati buuru gembekda ?",
+            "2. chamithaa hamadaaatama smoke karanne naththam hodai neda ?",
+            "3. sameeee kiynne hrima hoda ahinsaka always hrii lamayek neda?"
+        ];
+        let currentQIndex = 0;
+        const qText = document.getElementById('question-text');
+        const errorMsg = document.getElementById('error-msg');
+        qText.innerText = questions[0];
+
+        function handleAnswer(answer) {
+            if (answer === 'yes') {
+                errorMsg.classList.add('hidden');
+                currentQIndex++;
+                if (currentQIndex < questions.length) {
+                    qText.innerText = questions[currentQIndex];
+                } else {
+                    launchParty();
+                }
+            } else {
+                const insults = ["BUUUURUWA!", "waradiiii bngggg!", "polos kottoruwooo hrii ek click krnn!", "mooda gorakayaaa!"];
+                errorMsg.innerText = insults[Math.floor(Math.random() * insults.length)];
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // --- 4. PARTY LAUNCHER ---
+        function launchParty() {
+            document.getElementById('quiz-section').style.display = 'none';
+            const celeb = document.getElementById('celebration-section');
+            const galaxy = document.getElementById('galaxy-section');
+            
+            celeb.classList.remove('hidden'); celeb.classList.add('flex');
+            galaxy.classList.remove('hidden'); galaxy.classList.add('flex');
+            
+            const container = document.getElementById('chaos-container');
+            const icons = ['images/monster.png', 'images/donkey.png', 'images/shrek.png', 'images/luffy-hat.png', 'images/middle-finger.png', 'images/luffy-1.png', 'images/luffy-2.png', 'images/luffy-3.png'];
+            for(let i=0; i<35; i++) {
+                const img = document.createElement('img');
+                img.src = icons[Math.floor(Math.random() * icons.length)];
+                img.classList.add('floating-icon');
+                img.style.left = Math.random() * 100 + '%'; img.style.top = Math.random() * 100 + '%';
+                img.style.width = (Math.random() * 70 + 30) + 'px';
+                img.style.animationDelay = -(Math.random() * 5) + 's'; img.style.animationDuration = (Math.random() * 5 + 4) + 's';
+                container.appendChild(img);
+            }
+            for(let i=0; i<8; i++) {
+                const div = document.createElement('div'); div.innerText = "FUCK U";
+                div.classList.add('floating-icon', 'font-pirate-marker', 'text-black', 'text-xl', 'font-bold');
+                div.style.left = Math.random() * 100 + '%'; div.style.top = Math.random() * 100 + '%';
+                div.style.animationDelay = Math.random() + 's';
+                container.appendChild(div);
+            }
+            for(let i=0; i<8; i++) {
+                const div = document.createElement('div'); div.innerText = "Chuuu Aiyaaa";
+                div.classList.add('floating-icon', 'font-pirate-marker', 'text-black', 'text-xl', 'font-bold');
+                div.style.left = Math.random() * 100 + '%'; div.style.top = Math.random() * 100 + '%';
+                div.style.animationDelay = Math.random() + 's';
+                container.appendChild(div);
+            }
+        }
+
+        // --- 5. NOTE MODAL LOGIC ---
+        function openSpaceNote() {
+            const modal = document.getElementById('space-modal');
+            const content = document.getElementById('space-content');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('opacity-100');
+            content.classList.remove('scale-95', 'translate-y-4');
+            content.classList.add('scale-100', 'translate-y-0');
+        }
+
+        function closeSpaceNote() {
+            const modal = document.getElementById('space-modal');
+            const content = document.getElementById('space-content');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+            content.classList.add('scale-95', 'translate-y-4');
+            content.classList.remove('scale-100', 'translate-y-0');
+        }
+    </script>
+</body>
+</html>
